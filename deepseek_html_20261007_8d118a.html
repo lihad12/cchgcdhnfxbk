@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NEXUSEARN · watch & earn</title>
+    <!-- Font Awesome Icons (v6 free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: #0b0f1c;
+            background-image: radial-gradient(circle at 20% 30%, #1a2340 0%, #0b0f1c 70%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px 12px 40px;
+        }
+
+        /* main card – telegram style dark */
+        .app-container {
+            max-width: 440px;
+            width: 100%;
+            background: #121826;
+            border-radius: 36px;
+            box-shadow: 0 25px 50px -8px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 215, 0, 0.15);
+            overflow: hidden;
+            padding: 22px 18px 28px;
+            color: #eef2ff;
+            transition: all 0.15s;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        /* header / brand */
+        .brand {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .brand h1 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #ffd966, #ffb347);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 15px rgba(255, 200, 0, 0.4);
+        }
+
+        .brand-badge {
+            background: #1e2a44;
+            padding: 6px 12px;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #b9c8ff;
+            border: 1px solid #2f3e66;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .brand-badge i {
+            color: #ffd966;
+            font-size: 0.7rem;
+        }
+
+        /* wallet balance card */
+        .wallet-card {
+            background: linear-gradient(145deg, #1c253b, #131c2f);
+            border-radius: 28px;
+            padding: 20px 18px;
+            margin-bottom: 18px;
+            border: 1px solid #2e3b5e;
+            box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wallet-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #ffd966, #ffaa33, #ffd966);
+            opacity: 0.8;
+        }
+
+        .wallet-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .wallet-header span {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #a7b7e0;
+            letter-spacing: 0.3px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .wallet-header i {
+            color: #ffd966;
+            font-size: 1rem;
+        }
+
+        .balance-amount {
+            font-size: 3.4rem;
+            font-weight: 800;
+            line-height: 1;
+            color: #ffffff;
+            text-shadow: 0 0 18px rgba(255, 215, 0, 0.4);
+            display: flex;
+            align-items: baseline;
+            gap: 5px;
+        }
+
+        .balance-amount small {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #a7b7e0;
+            margin-left: 6px;
+        }
+
+        .keep-watching {
+            margin-top: 12px;
+            font-size: 0.85rem;
+            color: #9aa9d1;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 0 4px;
+            border-top: 1px dashed #2a3652;
+        }
+
+        .keep-watching i {
+            color: #ffd966;
+            font-size: 1rem;
+        }
+
+        /* lightning earnings block */
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 20px 0 14px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #e9edff;
+            letter-spacing: -0.2px;
+        }
+
+        .section-title i {
+            color: #ffd966;
+            background: #1e2a44;
+            padding: 6px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+        }
+
+        .ad-card {
+            background: #0f1626;
+            border-radius: 24px;
+            padding: 18px;
+            border: 1px solid #2d3c60;
+            box-shadow: 0 8px 0 #0a0f18;
+            margin-bottom: 6px;
+        }
+
+        .ad-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
+        .ad-header h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #fff;
+        }
+
+        .ad-header h3 i {
+            color: #ffb347;
+        }
+
+        .ad-stats {
+            background: #1c253b;
+            border-radius: 40px;
+            padding: 6px 14px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #b9c8ff;
+            border: 1px solid #2f3e66;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .ad-stats i {
+            color: #ffd966;
+            font-size: 0.7rem;
+        }
+
+        .reward-badge {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #192134;
+            border-radius: 60px;
+            padding: 10px 16px;
+            margin: 14px 0 10px;
+            border: 1px solid #3b4b75;
+        }
+
+        .reward-badge span {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #ffd966;
+        }
+
+        .reward-badge i {
+            color: #ffb347;
+            margin-right: 6px;
+        }
+
+        .reward-badge small {
+            font-size: 0.75rem;
+            color: #9aa9d1;
+            font-weight: 500;
+        }
+
+        .watch-btn {
+            background: linear-gradient(145deg, #ffd966, #f5b731);
+            border: none;
+            width: 100%;
+            padding: 18px 16px;
+            border-radius: 40px;
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #0b0f1c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            box-shadow: 0 10px 0 #b87c10, 0 8px 20px rgba(255, 200, 0, 0.3);
+            transition: all 0.1s ease;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+            margin: 18px 0 12px;
+            border: 1px solid #ffe28c;
+        }
+
+        .watch-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 6px 0 #b87c10, 0 8px 20px rgba(255, 200, 0, 0.3);
+        }
+
+        .daily-mission {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: #b9c8ff;
+            background: #1a2338;
+            border-radius: 30px;
+            padding: 10px 16px;
+            margin-bottom: 8px;
+            border: 1px solid #2c3c62;
+        }
+
+        .daily-mission i {
+            color: #ffd966;
+            margin-right: 5px;
+        }
+
+        /* Cash Vault section */
+        .vault-card {
+            background: #0f1626;
+            border-radius: 24px;
+            padding: 18px;
+            border: 1px solid #2d3c60;
+            margin: 16px 0 20px;
+            box-shadow: 0 8px 0 #0a0f18;
+        }
+
+        .vault-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        .vault-row span:first-child {
+            color: #9aa9d1;
+        }
+
+        .vault-row strong {
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        .min-withdraw {
+            font-size: 0.8rem;
+            color: #ffb347;
+            background: #1e2a44;
+            padding: 6px 12px;
+            border-radius: 40px;
+            display: inline-block;
+            margin-top: 6px;
+            border: 1px solid #3b4b75;
+        }
+
+        .history-title {
+            font-weight: 600;
+            margin: 18px 0 8px;
+            color: #d0dbff;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .history-empty {
+            background: #0c1321;
+            border-radius: 20px;
+            padding: 18px;
+            text-align: center;
+            color: #6a7da0;
+            font-size: 0.85rem;
+            border: 1px dashed #2e3d61;
+        }
+
+        /* User profile */
+        .user-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #131c2f;
+            border-radius: 26px;
+            padding: 16px 18px;
+            border: 1px solid #2f3e66;
+            margin: 16px 0 10px;
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .user-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .user-name i {
+            color: #ffd966;
+            font-size: 0.9rem;
+        }
+
+        .user-meta {
+            font-size: 0.75rem;
+            color: #8598c0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-meta i {
+            margin-right: 4px;
+            color: #ffb347;
+        }
+
+        /* privacy hub */
+        .privacy-hub {
+            background: #0d1424;
+            border-radius: 26px;
+            padding: 18px;
+            border: 1px solid #2a3652;
+            margin: 18px 0;
+            font-size: 0.8rem;
+            color: #b9c8ff;
+        }
+
+        .privacy-hub h4 {
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .privacy-hub h4 i {
+            color: #4cd964;
+        }
+
+        .privacy-item {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .privacy-item i {
+            color: #ffd966;
+            font-size: 0.9rem;
+            margin-top: 2px;
+        }
+
+        .privacy-item p {
+            color: #b0c0e0;
+        }
+
+        .last-update {
+            font-size: 0.7rem;
+            color: #6f82a8;
+            text-align: right;
+            margin-top: 8px;
+            border-top: 1px solid #1e2a44;
+            padding-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 6px;
+        }
+
+        /* announcements / admin mini blocks */
+        .row-double {
+            display: flex;
+            gap: 10px;
+            margin: 16px 0 6px;
+        }
+
+        .mini-card {
+            background: #0f1626;
+            border-radius: 20px;
+            padding: 14px;
+            flex: 1;
+            border: 1px solid #2a3652;
+        }
+
+        .mini-card h4 {
+            font-size: 0.8rem;
+            color: #d0dbff;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .mini-card .value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #ffd966;
+        }
+
+        .admin-suite {
+            margin-top: 12px;
+            background: #0a101f;
+            border-radius: 20px;
+            padding: 14px;
+            border: 1px solid #2a3652;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .admin-suite span {
+            font-size: 0.8rem;
+            color: #b9c8ff;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .admin-suite i {
+            color: #ffb347;
+        }
+
+        .tg-warning {
+            text-align: center;
+            background: #1e2a44;
+            border-radius: 40px;
+            padding: 10px 16px;
+            margin-top: 22px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #b9c8ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border: 1px solid #3b4b75;
+        }
+
+        .tg-warning i {
+            color: #ffd966;
+        }
+
+        /* dividers and small tweaks */
+        .gold-text {
+            color: #ffd966;
+        }
+
+        .icon-gold {
+            color: #ffd966;
+        }
+
+        .spacer {
+            height: 6px;
+        }
+
+        .btn-reset {
+            cursor: pointer;
+        }
+
+        /* micro interaction */
+        .watch-btn i {
+            font-size: 1.4rem;
+        }
+
+        /* Some extra style to match telegram dark */
+        .app-container ::selection {
+            background: #ffd966;
+            color: #0b0f1c;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container" id="app">
+        <!-- Header -->
+        <div class="brand">
+            <h1>NEXUSEARN</h1>
+            <div class="brand-badge">
+                <i class="fas fa-bolt"></i> PRO
+            </div>
+        </div>
+
+        <!-- Wallet Balance -->
+        <div class="wallet-card">
+            <div class="wallet-header">
+                <span><i class="fas fa-star"></i> Wallet Balance</span>
+                <i class="fas fa-chevron-right" style="color:#3f527a;"></i>
+            </div>
+            <div class="balance-amount">
+                ৳0 <small>BDT</small>
+            </div>
+            <div class="keep-watching">
+                <i class="fas fa-arrow-right"></i> keep watching → earn more
+            </div>
+        </div>
+
+        <!-- Lightning Earnings -->
+        <div class="section-title">
+            <i class="fas fa-bolt"></i> Lightning Earnings
+        </div>
+
+        <div class="ad-card">
+            <div class="ad-header">
+                <h3><i class="fas fa-play-circle"></i> WATCH & EARN</h3>
+                <div class="ad-stats">
+                    <i class="fas fa-tv"></i> Today: 0/10 ads
+                </div>
+            </div>
+
+            <div class="reward-badge">
+                <span><i class="fas fa-gift"></i> +৳10</span>
+                <small>per completed ad</small>
+            </div>
+
+            <!-- Main CTA button -->
+            <button class="watch-btn" id="watchAdBtn">
+                <i class="fas fa-play"></i> TAP TO START
+            </button>
+
+            <div class="daily-mission">
+                <span><i class="fas fa-calendar-check"></i> Daily mission</span>
+                <span>10 ads = +100 BDT max</span>
+            </div>
+            <div style="font-size:0.7rem; color:#6f82a8; text-align:center; margin-top:6px;">
+                <i class="fas fa-sync-alt"></i> Refresh daily!
+            </div>
+        </div>
+
+        <!-- Cash Vault -->
+        <div class="section-title">
+            <i class="fas fa-vault"></i> Cash Vault
+        </div>
+
+        <div class="vault-card">
+            <div class="vault-row">
+                <span>Total Balance</span>
+                <strong>৳0</strong>
+            </div>
+            <div class="vault-row">
+                <span>Min. withdrawal</span>
+                <strong>৳2000</strong>
+            </div>
+            <div class="min-withdraw">
+                <i class="fas fa-bolt"></i> instant eligible
+            </div>
+
+            <div class="history-title">
+                <i class="fas fa-history"></i> Withdrawal History
+            </div>
+            <div class="history-empty">
+                <i class="fas fa-receipt" style="margin-right:8px;"></i> No withdrawals yet
+            </div>
+        </div>
+
+        <!-- User Profile (Telegram style) -->
+        <div class="user-card">
+            <div class="user-info">
+                <div class="user-name">
+                    <i class="fas fa-user-circle"></i> @username
+                </div>
+                <div class="user-meta">
+                    <span><i class="fas fa-globe"></i> Joined via Telegram</span>
+                    <span><i class="fas fa-id-card"></i> User ID -</span>
+                </div>
+            </div>
+            <i class="fas fa-chevron-right" style="color:#ffd966; opacity:0.7;"></i>
+        </div>
+
+        <!-- Privacy & Safety Hub -->
+        <div class="privacy-hub">
+            <h4><i class="fas fa-shield-alt"></i> Privacy & Safety Hub</h4>
+            <div class="privacy-item">
+                <i class="fas fa-lock"></i>
+                <p>Ultra-secure vault: Your data is AES-256 encrypted & never shared. Only withdrawal credentials stored.</p>
+            </div>
+            <div class="privacy-item">
+                <i class="fas fa-chart-line"></i>
+                <p>Earning transparency: Each ad rewards ৳10, max 10 ads/day. Reset at midnight (BDT). Bonus events incoming.</p>
+            </div>
+            <div class="privacy-item">
+                <i class="fas fa-clock"></i>
+                <p>Rapid payouts: Minimum withdrawal ৳2000, processed within 24hrs (Mon-Fri). No hidden fees.</p>
+            </div>
+            <div class="privacy-item">
+                <i class="fas fa-user-shield"></i>
+                <p>Anti-fraud enforcement: Any bot/cheating leads to permanent suspension. Legit users get bonus rewards.</p>
+            </div>
+            <div class="privacy-item">
+                <i class="fas fa-headset"></i>
+                <p>24/7 support: Tap green bubble → our team resolves issues quickly.</p>
+            </div>
+            <div class="last-update">
+                <i class="fas fa-key"></i> Last policy update: May 2026 | NexusEarn Pro
+            </div>
+        </div>
+
+        <!-- Announcements & Admin Suite compact -->
+        <div class="row-double">
+            <div class="mini-card">
+                <h4><i class="fas fa-bullhorn"></i> Announcements</h4>
+                <div class="value">📢 soon</div>
+            </div>
+            <div class="mini-card">
+                <h4><i class="fas fa-crown"></i> Admin Suite</h4>
+                <div class="value">⚙️ active</div>
+            </div>
+        </div>
+
+        <!-- Global Bonus + Ad Performance integrated -->
+        <div class="admin-suite">
+            <span><i class="fas fa-gift"></i> Global Bonus</span>
+            <span><i class="fas fa-chart-simple"></i> Ad Performance</span>
+            <i class="fas fa-chevron-right" style="color:#ffd966;"></i>
+        </div>
+
+        <!-- Telegram Warning -->
+        <div class="tg-warning">
+            <i class="fas fa-exclamation-triangle"></i> ⚠️ Please open this app inside Telegram.
+        </div>
+
+        <!-- hidden user data / small JS for engagement (fake counter) -->
+        <div style="display: none;">NEXUSEARN interface</div>
+    </div>
+
+    <script>
+        (function() {
+            // Simple interactive demo: watch ad click increments a counter (just for show)
+            const watchBtn = document.getElementById('watchAdBtn');
+            const adStats = document.querySelector('.ad-stats');
+            const balanceDisplay = document.querySelector('.balance-amount');
+            const vaultTotal = document.querySelector('.vault-row strong'); // first strong inside vault (total balance)
+            let adsWatched = 0;
+            const maxAds = 10;
+            let balance = 0;
+
+            // ensure we correctly target the vault total balance (second .vault-row strong)
+            const vaultBalanceElement = document.querySelector('.vault-card .vault-row:nth-child(1) strong');
+            const totalBalanceSpan = vaultBalanceElement;
+
+            function updateUI() {
+                // update ad stats
+                adStats.innerHTML = `<i class="fas fa-tv"></i> Today: ${adsWatched}/${maxAds} ads`;
+
+                // update wallet balance display (main)
+                balanceDisplay.innerHTML = `৳${balance} <small>BDT</small>`;
+
+                // update vault total balance (if exists)
+                if (totalBalanceSpan) {
+                    totalBalanceSpan.textContent = `৳${balance}`;
+                }
+
+                // if max ads reached, disable button visually? optional
+                if (adsWatched >= maxAds) {
+                    watchBtn.style.opacity = '0.7';
+                    watchBtn.innerHTML = '<i class="fas fa-check-circle"></i> DAILY LIMIT REACHED';
+                } else {
+                    watchBtn.style.opacity = '1';
+                    watchBtn.innerHTML = '<i class="fas fa-play"></i> TAP TO START';
+                }
+            }
+
+            watchBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                if (adsWatched >= maxAds) {
+                    alert('Daily ad limit reached (10/10). Come back tomorrow!');
+                    return;
+                }
+
+                // simulate watching an ad (instant reward)
+                adsWatched++;
+                balance += 10;
+
+                updateUI();
+
+                // small haptic like feedback (just visual)
+                watchBtn.style.transform = 'scale(0.97)';
+                setTimeout(() => {
+                    watchBtn.style.transform = 'scale(1)';
+                }, 120);
+
+                // extra: if user reaches max, show a tiny note
+                if (adsWatched === maxAds) {
+                    setTimeout(() => {
+                        alert('🎉 Daily mission complete! You earned 100 BDT today.');
+                    }, 150);
+                }
+            });
+
+            // optional: click on "keep watching" triggers same as watch button (but subtle)
+            const keepWatching = document.querySelector('.keep-watching');
+            keepWatching.addEventListener('click', function() {
+                watchBtn.click();
+            });
+
+            // init
+            updateUI();
+
+            // display user ID as fake placeholder
+            const userIdSpan = document.querySelector('.user-meta span:last-child');
+            if (userIdSpan) {
+                // keep as is
+            }
+
+            // minor: console safety
+        })();
+    </script>
+</body>
+</html>
